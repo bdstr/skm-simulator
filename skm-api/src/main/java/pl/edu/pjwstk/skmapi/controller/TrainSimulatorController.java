@@ -1,13 +1,12 @@
 package pl.edu.pjwstk.skmapi.controller;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 import pl.edu.pjwstk.skmapi.model.Train;
+import pl.edu.pjwstk.skmapi.model.TrainStatus;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -40,19 +39,13 @@ public class TrainSimulatorController {
                 .filter(train -> trainID == train.getID())
                 .findAny()
                 .orElse(null);
-        if (selectedTrain != null) {
-            return selectedTrain.getTrainStatus();
-        } else {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Train not found!"
-            );
-        }
+        return new TrainStatus(selectedTrain).getTrainStatus();
     }
 
     @PostMapping("/move")
     public String moveForward() {
         for (Train train : trainList) {
-            train.moveForward();
+            train.moveTrainSimulationStepForward();
         }
         return "OK";
     }

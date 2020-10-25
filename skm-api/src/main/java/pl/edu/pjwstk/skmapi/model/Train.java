@@ -29,17 +29,15 @@ public class Train {
         return id;
     }
 
-    public LinkedHashMap<String, Object> getTrainStatus() {
-        LinkedHashMap<String, Object> status = new LinkedHashMap<>();
-        status.put("ID", id);
-        status.put("Current station", currentTrainStation.getName());
-        status.put("Places occupied percentage", getPercentageOfTrainFilling());
-        status.put("People number", peopleOnBoard.size());
-        status.put("People", peopleOnBoard);
-        return status;
+    public List<Person> getPeopleOnBoard() {
+        return peopleOnBoard;
     }
 
-    private double getPercentageOfTrainFilling() {
+    public TrainStation getCurrentTrainStation() {
+        return currentTrainStation;
+    }
+
+    public double getPercentageOfTrainFilling() {
         return (100.0 / calculateTotalPlacesInTrain()) * peopleOnBoard.size();
     }
 
@@ -47,11 +45,11 @@ public class Train {
         return compartmentsNumber * compartmentPlacesNumber;
     }
 
-    public void moveForward() {
+    public void moveTrainSimulationStepForward() {
         if (currentTrainStation.isLastStation()) {
             waitOnLastStation();
         } else {
-            makeMove();
+            makeMoveToNextStation();
         }
     }
 
@@ -59,7 +57,7 @@ public class Train {
         if (waitedTimeOnLastStation >= LAST_STATION_WAIT_TIME) {
             waitedTimeOnLastStation = 0;
             changeDirection();
-            makeMove();
+            makeMoveToNextStation();
         } else {
             waitedTimeOnLastStation++;
         }
@@ -73,7 +71,7 @@ public class Train {
         }
     }
 
-    private void makeMove() {
+    private void makeMoveToNextStation() {
         getNewPeopleOnBoard();
         currentTrainStation = TrainStation.values()[currentTrainStation.getId() + direction.getDirection()];
         getPeopleOffTheTrain();

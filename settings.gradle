@@ -1,0 +1,4 @@
+rootProject.name = 'skm-simulator'
+
+include 'skm-api'
+include 'skm-client'
