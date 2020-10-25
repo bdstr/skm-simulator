@@ -1,5 +1,8 @@
 package pl.edu.pjwstk.skmapi.model;
 
+import org.springframework.beans.factory.annotation.Value;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -8,22 +11,24 @@ public class Train {
     private static final int LAST_STATION_WAIT_TIME = 2;
 
     private final int id;
-    private final int compartmentNumber;
-    private final int compartmentPlacesNumber;
-    private TrainStation currentTraintStation;
-    private int movingDirection;
+    private TrainStation currentTrainStation;
+    private final Direction direction;
     private int waitedTimeOnLastStation;
 
-    private List<Person> peopleOnBoard;
+    private final List<Person> peopleOnBoard;
 
-    public Train(int id, int compartmentNumber, int compartmentPlacesNumber) {
+    @Value("${configuration.compartmentsNumber}")
+    private int compartmentsNumber;
+
+    @Value("${configuration.compartmentPlacesNumber}")
+    private int compartmentPlacesNumber;
+
+    public Train(int id) {
         this.id = id;
-        this.compartmentNumber = compartmentNumber;
-        this.compartmentPlacesNumber = compartmentPlacesNumber;
-
-        Random rand = new Random();
-        this.currentTraintStation = TrainStation.values()[rand.nextInt(TrainStation.values().length)];
-        this.movingDirection = rand.nextBoolean() ? 1 : -1;
+        peopleOnBoard = new ArrayList<>();
+        Random random = new Random();
+        this.currentTrainStation = TrainStation.values()[random.nextInt(TrainStation.values().length)];
+        this.direction = new Direction();
         this.waitedTimeOnLastStation = 0;
     }
 
@@ -31,8 +36,8 @@ public class Train {
         return id;
     }
 
-    public int getCompartmentNumber() {
-        return compartmentNumber;
+    public int getCompartmentsNumber() {
+        return compartmentsNumber;
     }
 
     public int getCompartmentPlacesNumber() {
@@ -40,11 +45,15 @@ public class Train {
     }
 
     public TrainStation getCurrentTraintStation() {
-        return currentTraintStation;
+        return currentTrainStation;
+    }
+
+    public List<Person> getPeopleOnBoard() {
+        return peopleOnBoard;
     }
 
     public void moveForward() {
-        if (currentTraintStation.isLastStation()) {
+        if (currentTrainStation.isLastStation()) {
             waitOnLastStation();
         } else {
             makeMove();
@@ -62,16 +71,34 @@ public class Train {
     }
 
     private void changeDirection() {
-        if (currentTraintStation.getId() == 0) {
-            movingDirection = 1;
+        if (currentTrainStation.getId() == 0) {
+            direction.setDirection(Direction.START_TO_END);
         } else {
-            movingDirection = -1;
+            direction.setDirection(Direction.END_TO_START);
         }
     }
 
     private void makeMove() {
-        int currentStationID = currentTraintStation.getId();
-        currentTraintStation = TrainStation.values()[currentStationID + movingDirection];
+        getNewPeopleOnBoard();
+        currentTrainStation = TrainStation.values()[currentTrainStation.getId() + direction.getDirection()];
+        getPeopleOffTheTrain();
+    }
+
+    private void getNewPeopleOnBoard() {
+        int freePlacesInTrain = calculateFreePlacesInTrain();
+        Random rand = new Random();
+        int newPeopleNumber = Math.max(rand.nextInt(7) + 2, freePlacesInTrain);
+        for (int i = 0; i < newPeopleNumber; i++) {
+            peopleOnBoard.add(new Person(currentTrainStation, direction));
+        }
+    }
+
+    private int calculateFreePlacesInTrain() {
+        return compartmentsNumber * compartmentPlacesNumber - peopleOnBoard.size();
+    }
+
+    private void getPeopleOffTheTrain() {
+        peopleOnBoard.removeIf(person -> person.getDestinationStation().getId() == currentTrainStation.getId());
     }
 
 }
