@@ -1,30 +1,23 @@
 package pl.edu.pjwstk.skmapi.model;
 
-import org.springframework.beans.factory.annotation.Value;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Train {
 
     private static final int LAST_STATION_WAIT_TIME = 2;
 
     private final int id;
+    private final int compartmentsNumber;
+    private final int compartmentPlacesNumber;
+    private final List<Person> peopleOnBoard;
     private TrainStation currentTrainStation;
     private final Direction direction;
     private int waitedTimeOnLastStation;
 
-    private final List<Person> peopleOnBoard;
-
-    @Value("${configuration.compartmentsNumber}")
-    private int compartmentsNumber;
-
-    @Value("${configuration.compartmentPlacesNumber}")
-    private int compartmentPlacesNumber;
-
-    public Train(int id) {
+    public Train(int id, int compartmentsNumber, int compartmentPlacesNumber) {
         this.id = id;
+        this.compartmentsNumber = compartmentsNumber;
+        this.compartmentPlacesNumber = compartmentPlacesNumber;
         peopleOnBoard = new ArrayList<>();
         Random random = new Random();
         this.currentTrainStation = TrainStation.values()[random.nextInt(TrainStation.values().length)];
@@ -32,24 +25,26 @@ public class Train {
         this.waitedTimeOnLastStation = 0;
     }
 
-    public int getId() {
+    public int getID() {
         return id;
     }
 
-    public int getCompartmentsNumber() {
-        return compartmentsNumber;
+    public LinkedHashMap<String, Object> getTrainStatus() {
+        LinkedHashMap<String, Object> status = new LinkedHashMap<>();
+        status.put("ID", id);
+        status.put("Current station", currentTrainStation.getName());
+        status.put("Places occupied percentage", getPercentageOfTrainFilling());
+        status.put("People number", peopleOnBoard.size());
+        status.put("People", peopleOnBoard);
+        return status;
     }
 
-    public int getCompartmentPlacesNumber() {
-        return compartmentPlacesNumber;
+    private double getPercentageOfTrainFilling() {
+        return (100.0 / calculateTotalPlacesInTrain()) * peopleOnBoard.size();
     }
 
-    public TrainStation getCurrentTraintStation() {
-        return currentTrainStation;
-    }
-
-    public List<Person> getPeopleOnBoard() {
-        return peopleOnBoard;
+    private int calculateTotalPlacesInTrain() {
+        return compartmentsNumber * compartmentPlacesNumber;
     }
 
     public void moveForward() {
@@ -87,14 +82,14 @@ public class Train {
     private void getNewPeopleOnBoard() {
         int freePlacesInTrain = calculateFreePlacesInTrain();
         Random rand = new Random();
-        int newPeopleNumber = Math.max(rand.nextInt(7) + 2, freePlacesInTrain);
+        int newPeopleNumber = Math.min(rand.nextInt(7) + 2, freePlacesInTrain);
         for (int i = 0; i < newPeopleNumber; i++) {
             peopleOnBoard.add(new Person(currentTrainStation, direction));
         }
     }
 
     private int calculateFreePlacesInTrain() {
-        return compartmentsNumber * compartmentPlacesNumber - peopleOnBoard.size();
+        return calculateTotalPlacesInTrain() - peopleOnBoard.size();
     }
 
     private void getPeopleOffTheTrain() {
