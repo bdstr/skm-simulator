@@ -7,4 +7,4 @@ services:
   skmclient:
     build: ./skm-client
     ports:
-      - '22222:22222'
+      - '8080:8080'

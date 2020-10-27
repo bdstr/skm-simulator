@@ -1,4 +1,7 @@
-package pl.edu.pjwstk.skmapi.model;
+package pl.edu.pjwstk.skmclient.model;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class TrainStatus {
 
@@ -7,7 +10,11 @@ public class TrainStatus {
     private final int peopleNumber;
     private final double occupiedPlacesPercentage;
 
-    public TrainStatus(int id, TrainStation currentTrainStation, int peopleNumber, double occupiedPlacesPercentage) {
+    @JsonCreator
+    public TrainStatus(@JsonProperty("id") int id,
+                       @JsonProperty("currentTrainStation") TrainStation currentTrainStation,
+                       @JsonProperty("peopleNumber") int peopleNumber,
+                       @JsonProperty("occupiedPlacesPercentage") double occupiedPlacesPercentage) {
         this.id = id;
         this.currentTrainStation = currentTrainStation;
         this.peopleNumber = peopleNumber;

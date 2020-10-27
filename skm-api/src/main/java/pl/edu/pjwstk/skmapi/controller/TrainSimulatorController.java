@@ -46,17 +46,20 @@ public class TrainSimulatorController {
     }
 
     @GetMapping("/trains/{id}")
-    public LinkedHashMap<String, Object> getTrainStatus(@PathVariable(value = "id") int trainID) {
+    public TrainStatus getTrainStatus(@PathVariable(value = "id") int trainID) {
         Train selectedTrain = getTrainByID(trainID);
-        return new TrainStatus(selectedTrain).getStatus();
+        return new TrainStatus(selectedTrain.getID(),
+                selectedTrain.getCurrentTrainStation(),
+                selectedTrain.getNumberOfPeopleOnBoard(),
+                selectedTrain.getPercentageOfTrainFilling());
     }
 
 
     @GetMapping("/trains/{train_id}/{compartment_id}")
-    public LinkedHashMap<String, Object> getCompartmentStatus(@PathVariable(value = "train_id") int trainID,
-                                                              @PathVariable(value = "compartment_id") int compartmentID) {
+    public CompartmentStatus getCompartmentStatus(@PathVariable(value = "train_id") int trainID,
+                                                  @PathVariable(value = "compartment_id") int compartmentID) {
         Compartment selectedCompartment = getCompartmentByID(trainID, compartmentID);
-        return new CompartmentStatus(selectedCompartment).getStatus();
+        return new CompartmentStatus(selectedCompartment.getID(), selectedCompartment.getPeopleOnBoardNames());
     }
 
     private Train getTrainByID(int trainID) {
@@ -75,7 +78,7 @@ public class TrainSimulatorController {
         try {
             selectedCompartment = selectedTrain.getCompartmentsList().get(compartmentID);
         } catch (IndexOutOfBoundsException e) {
-            throwResponseCode404("Train not found");
+            throwResponseCode404("Compartment not found");
         }
         return selectedCompartment;
     }

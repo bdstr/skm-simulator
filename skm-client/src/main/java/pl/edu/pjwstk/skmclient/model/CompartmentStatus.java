@@ -1,4 +1,7 @@
-package pl.edu.pjwstk.skmapi.model;
+package pl.edu.pjwstk.skmclient.model;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
@@ -7,7 +10,9 @@ public class CompartmentStatus {
     private final int id;
     private final List<String> peopleNames;
 
-    public CompartmentStatus(int id, List<String> peopleNames) {
+    @JsonCreator
+    public CompartmentStatus(@JsonProperty("id") int id,
+                             @JsonProperty("peopleNames") List<String> peopleNames) {
         this.id = id;
         this.peopleNames = peopleNames;
     }
