@@ -1,10 +1,14 @@
 package pl.edu.pjwstk.skmapi.controller;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
+import pl.edu.pjwstk.skmapi.model.Compartment;
+import pl.edu.pjwstk.skmapi.model.CompartmentStatus;
 import pl.edu.pjwstk.skmapi.model.Train;
 import pl.edu.pjwstk.skmapi.model.TrainStatus;
 
@@ -25,6 +29,14 @@ public class TrainSimulatorController {
         }
     }
 
+    @PostMapping("/move")
+    public String moveForward() {
+        for (Train train : trainList) {
+            train.moveTrainSimulationStepForward();
+        }
+        return "OK";
+    }
+
     @GetMapping("/trains")
     public LinkedHashMap<String, Object> getTrainsIDList() {
         LinkedHashMap<String, Object> trainsStatus = new LinkedHashMap<>();
@@ -34,19 +46,41 @@ public class TrainSimulatorController {
     }
 
     @GetMapping("/trains/{id}")
-    public LinkedHashMap<String, Object> getTrainByID(@PathVariable(value = "id") int trainID) {
-        Train selectedTrain = trainList.stream()
-                .filter(train -> trainID == train.getID())
-                .findAny()
-                .orElse(null);
-        return new TrainStatus(selectedTrain).getTrainStatus();
+    public LinkedHashMap<String, Object> getTrainStatus(@PathVariable(value = "id") int trainID) {
+        Train selectedTrain = getTrainByID(trainID);
+        return new TrainStatus(selectedTrain).getStatus();
     }
 
-    @PostMapping("/move")
-    public String moveForward() {
-        for (Train train : trainList) {
-            train.moveTrainSimulationStepForward();
+
+    @GetMapping("/trains/{train_id}/{compartment_id}")
+    public LinkedHashMap<String, Object> getCompartmentStatus(@PathVariable(value = "train_id") int trainID,
+                                                              @PathVariable(value = "compartment_id") int compartmentID) {
+        Compartment selectedCompartment = getCompartmentByID(trainID, compartmentID);
+        return new CompartmentStatus(selectedCompartment).getStatus();
+    }
+
+    private Train getTrainByID(int trainID) {
+        Train selectedTrain = null;
+        try {
+            selectedTrain = trainList.get(trainID);
+        } catch (IndexOutOfBoundsException e) {
+            throwResponseCode404("Train not found");
         }
-        return "OK";
+        return selectedTrain;
+    }
+
+    private Compartment getCompartmentByID(int trainID, int compartmentID) {
+        Train selectedTrain = getTrainByID(trainID);
+        Compartment selectedCompartment = null;
+        try {
+            selectedCompartment = selectedTrain.getCompartmentsList().get(compartmentID);
+        } catch (IndexOutOfBoundsException e) {
+            throwResponseCode404("Train not found");
+        }
+        return selectedCompartment;
+    }
+
+    private void throwResponseCode404(String message) {
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, message);
     }
 }

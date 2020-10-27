@@ -1,7 +1,5 @@
 package pl.edu.pjwstk.skmapi.model;
 
-import java.util.Random;
-
 public class Person {
 
     private final String name;
@@ -12,9 +10,9 @@ public class Person {
 
         int randomStationNumber;
         if (direction.getDirection() == Direction.START_TO_END) {
-            randomStationNumber = getRandomNumberInRange(startingStation.getId() + 1, TrainStation.values().length - 1);
+            randomStationNumber = Randomizer.getRandomNumberInRange(startingStation.getId() + 1, TrainStation.values().length - 1);
         } else {
-            randomStationNumber = getRandomNumberInRange(0, startingStation.getId() - 1);
+            randomStationNumber = Randomizer.getRandomNumberInRange(0, startingStation.getId() - 1);
         }
         destinationStation = TrainStation.values()[randomStationNumber];
     }
@@ -25,13 +23,5 @@ public class Person {
 
     public TrainStation getDestinationStation() {
         return destinationStation;
-    }
-
-    private int getRandomNumberInRange(int min, int max) {
-        if (min >= max) {
-            return max;
-        }
-        Random random = new Random();
-        return random.nextInt((max - min) + 1) + min;
     }
 }
