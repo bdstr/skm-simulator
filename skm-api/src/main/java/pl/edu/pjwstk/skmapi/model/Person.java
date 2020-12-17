@@ -1,30 +1,31 @@
 package pl.edu.pjwstk.skmapi.model;
 
 import com.github.javafaker.Faker;
+import pl.edu.pjwstk.skmapi.utils.Randomizer;
 
 import java.util.Locale;
 
 public class Person {
 
     private final String name;
-    private final TrainStation destinationStation;
+    private final Station destinationStation;
 
-    public Person(TrainStation startingStation, Direction direction) {
+    public Person(Station startingStation, Direction direction) {
         name = generateRandomName();
         int randomStationNumber;
         if (direction.getDirection() == Direction.START_TO_END) {
-            randomStationNumber = Randomizer.getRandomNumberInRange(startingStation.getId() + 1, TrainStation.values().length - 1);
+            randomStationNumber = Randomizer.getRandomNumberInRange(startingStation.getId() + 1, Station.values().length - 1);
         } else {
             randomStationNumber = Randomizer.getRandomNumberInRange(0, startingStation.getId() - 1);
         }
-        destinationStation = TrainStation.values()[randomStationNumber];
+        destinationStation = Station.values()[randomStationNumber];
     }
 
     public String getName() {
         return name;
     }
 
-    public TrainStation getDestinationStation() {
+    public Station getDestinationStation() {
         return destinationStation;
     }
 

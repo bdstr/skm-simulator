@@ -1,18 +1,18 @@
-package pl.edu.pjwstk.skmapi.model;
+package pl.edu.pjwstk.skmapi.model.statuses;
 
 import java.util.List;
 
 public class CompartmentStatus {
 
-    private final int id;
+    private final Long id;
     private final List<String> peopleNames;
 
-    public CompartmentStatus(int id, List<String> peopleNames) {
+    public CompartmentStatus(Long id, List<String> peopleNames) {
         this.id = id;
         this.peopleNames = peopleNames;
     }
 
-    public int getID() {
+    public Long getID() {
         return id;
     }
 

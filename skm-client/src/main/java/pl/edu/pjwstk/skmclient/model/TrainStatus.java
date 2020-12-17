@@ -5,13 +5,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class TrainStatus {
 
-    private final int id;
+    private final Long id;
     private final TrainStation currentTrainStation;
     private final int peopleNumber;
     private final double occupiedPlacesPercentage;
 
     @JsonCreator
-    public TrainStatus(@JsonProperty("id") int id,
+    public TrainStatus(@JsonProperty("id") Long id,
                        @JsonProperty("currentTrainStation") TrainStation currentTrainStation,
                        @JsonProperty("peopleNumber") int peopleNumber,
                        @JsonProperty("occupiedPlacesPercentage") double occupiedPlacesPercentage) {
@@ -21,7 +21,7 @@ public class TrainStatus {
         this.occupiedPlacesPercentage = occupiedPlacesPercentage;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 

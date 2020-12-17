@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import pl.edu.pjwstk.skmapi.model.Compartment;
-import pl.edu.pjwstk.skmapi.model.CompartmentStatus;
+import pl.edu.pjwstk.skmapi.model.statuses.CompartmentStatus;
 import pl.edu.pjwstk.skmapi.model.Train;
-import pl.edu.pjwstk.skmapi.model.TrainStatus;
+import pl.edu.pjwstk.skmapi.model.statuses.TrainStatus;
 
 import java.util.*;
 import java.util.stream.Collectors;

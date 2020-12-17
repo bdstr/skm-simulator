@@ -1,25 +1,27 @@
-package pl.edu.pjwstk.skmapi.model;
+package pl.edu.pjwstk.skmapi.model.statuses;
+
+import pl.edu.pjwstk.skmapi.model.Station;
 
 public class TrainStatus {
 
-    private final int id;
-    private final TrainStation currentTrainStation;
+    private final Long id;
+    private final Station currentStation;
     private final int peopleNumber;
     private final double occupiedPlacesPercentage;
 
-    public TrainStatus(int id, TrainStation currentTrainStation, int peopleNumber, double occupiedPlacesPercentage) {
+    public TrainStatus(Long id, Station currentStation, int peopleNumber, double occupiedPlacesPercentage) {
         this.id = id;
-        this.currentTrainStation = currentTrainStation;
+        this.currentStation = currentStation;
         this.peopleNumber = peopleNumber;
         this.occupiedPlacesPercentage = occupiedPlacesPercentage;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public TrainStation getCurrentTrainStation() {
-        return currentTrainStation;
+    public Station getCurrentTrainStation() {
+        return currentStation;
     }
 
     public int getPeopleNumber() {

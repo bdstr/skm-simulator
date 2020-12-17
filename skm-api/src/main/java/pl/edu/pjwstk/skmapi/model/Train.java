@@ -1,33 +1,30 @@
 package pl.edu.pjwstk.skmapi.model;
 
-import java.util.*;
+import pl.edu.pjwstk.skmapi.utils.Randomizer;
+
+import javax.persistence.*;
+import java.util.ArrayList;
 
 public class Train {
 
-    private static final int LAST_STATION_WAIT_TIME = 2;
-
-    private final int id;
-    private final int compartmentsNumber;
-    private final int compartmentPlacesNumber;
-    private TrainStation currentTrainStation;
+    private final Long id;
+    private Station currentStation;
     private final Direction direction;
     private int waitedTimeOnLastStation;
     private final ArrayList<Compartment> compartments;
 
-    public Train(int id, int compartmentsNumber, int compartmentPlacesNumber) {
+    public Train(long id, int compartmentsNumber, int compartmentPlacesNumber) {
         this.id = id;
-        this.compartmentsNumber = compartmentsNumber;
-        this.compartmentPlacesNumber = compartmentPlacesNumber;
-        this.currentTrainStation = (TrainStation) Randomizer.getRandomElementFromArray(TrainStation.values());
+        this.currentStation = (Station) Randomizer.getRandomElementFromArray(Station.values());
         this.direction = new Direction();
         this.waitedTimeOnLastStation = 0;
         this.compartments = new ArrayList<>();
-        for (int i = 0; i < compartmentsNumber; i++) {
+        for (long i = 0L; i < compartmentsNumber; i++) {
             compartments.add(new Compartment(i, compartmentPlacesNumber));
         }
     }
 
-    public int getID() {
+    public long getID() {
         return id;
     }
 
@@ -35,8 +32,8 @@ public class Train {
         return compartments;
     }
 
-    public TrainStation getCurrentTrainStation() {
-        return currentTrainStation;
+    public Station getCurrentTrainStation() {
+        return currentStation;
     }
 
     public double getPercentageOfTrainFilling() {
@@ -44,27 +41,28 @@ public class Train {
     }
 
     private int getTotalNumberOfPlacesInTrain() {
-        return compartmentsNumber * compartmentPlacesNumber;
+        return compartments.stream()
+                .map(Compartment::getCapacity)
+                .reduce(Integer::sum)
+                .orElse(0);
     }
 
     public int getNumberOfPeopleOnBoard() {
-        int number = 0;
-        for (Compartment compartment : compartments) {
-            number += compartment.getNumberOfPeopleOnBoard();
-        }
-        return number;
+        return compartments.stream()
+                .map(Compartment::getNumberOfPeopleOnBoard)
+                .reduce(0, Integer::sum);
     }
 
     public void moveTrainSimulationStepForward() {
-        if (currentTrainStation.isLastStation()) {
-            waitOnLastStation();
+        if (currentStation.isLastStation()) {
+            waitOnLastStation(currentStation.getPauseTime());
         } else {
             makeMoveToNextStation();
         }
     }
 
-    private void waitOnLastStation() {
-        if (waitedTimeOnLastStation >= LAST_STATION_WAIT_TIME) {
+    private void waitOnLastStation(int pauseTime) {
+        if (waitedTimeOnLastStation >= pauseTime) {
             waitedTimeOnLastStation = 0;
             changeDirection();
             makeMoveToNextStation();
@@ -74,7 +72,7 @@ public class Train {
     }
 
     private void changeDirection() {
-        if (currentTrainStation.getId() == 0) {
+        if (currentStation.getId() == 0) {
             direction.setDirection(Direction.START_TO_END);
         } else {
             direction.setDirection(Direction.END_TO_START);
@@ -83,7 +81,7 @@ public class Train {
 
     private void makeMoveToNextStation() {
         getNewPeopleOnBoard();
-        currentTrainStation = TrainStation.values()[currentTrainStation.getId() + direction.getDirection()];
+        currentStation = Station.values()[currentStation.getId() + direction.getDirection()];
         removePeopleFromTrain();
     }
 
@@ -91,7 +89,7 @@ public class Train {
         int newPeopleNumber = Math.min(Randomizer.getRandomNumberInRange(2, 8), getNumberOfFreePlacesInTrain());
         for (int i = 0; i < newPeopleNumber; i++) {
             Compartment notFullCompartment = getRandomNotFullCompartment();
-            notFullCompartment.addPersonOnBoard(new Person(currentTrainStation, direction));
+            notFullCompartment.addPersonOnBoard(new Person(currentStation, direction));
         }
     }
 
@@ -107,9 +105,7 @@ public class Train {
     }
 
     private void removePeopleFromTrain() {
-        for (Compartment compartment : compartments) {
-            compartment.removePeopleFromCompartment(currentTrainStation);
-        }
+        compartments.forEach(compartment -> compartment.removePeopleFromCompartment(currentStation));
     }
 
 }

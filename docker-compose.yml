@@ -4,7 +4,22 @@ services:
     build: ./skm-api
     ports:
       - '9000:9000'
+    restart: on-failure:5
+    depends_on:
+      - skmdb
   skmclient:
     build: ./skm-client
     ports:
       - '8080:8080'
+    depends_on:
+      - skmapi
+  skmdb:
+    build: ./skm-db
+    ports:
+      - "3306:3306"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: pwd
+      MYSQL_DATABASE: skm
+      MYSQL_USER: simulator
+      MYSQL_PASSWORD: pwd

@@ -7,17 +7,17 @@ import java.util.List;
 
 public class CompartmentStatus {
 
-    private final int id;
+    private final Long id;
     private final List<String> peopleNames;
 
     @JsonCreator
-    public CompartmentStatus(@JsonProperty("id") int id,
+    public CompartmentStatus(@JsonProperty("id") Long id,
                              @JsonProperty("peopleNames") List<String> peopleNames) {
         this.id = id;
         this.peopleNames = peopleNames;
     }
 
-    public int getID() {
+    public Long getID() {
         return id;
     }
 

@@ -5,17 +5,17 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Compartment {
-    private final int id;
-    private final int compartmentPlacesNumber;
+    private final Long id;
+    private final int capacity;
     private final List<Person> peopleOnBoard;
 
-    public Compartment(int id, int compartmentPlacesNumber) {
+    public Compartment(Long id, int capacity) {
         this.id = id;
-        this.compartmentPlacesNumber = compartmentPlacesNumber;
+        this.capacity = capacity;
         peopleOnBoard = new ArrayList<>();
     }
 
-    public int getID() {
+    public Long getID() {
         return id;
     }
 
@@ -23,6 +23,10 @@ public class Compartment {
         LinkedList<String> peoplesNamesList = new LinkedList<>();
         peopleOnBoard.forEach(person -> peoplesNamesList.add(person.getName()));
         return peoplesNamesList;
+    }
+
+    public int getCapacity() {
+        return capacity;
     }
 
     public int getNumberOfPeopleOnBoard() {
@@ -33,11 +37,11 @@ public class Compartment {
         peopleOnBoard.add(person);
     }
 
-    public void removePeopleFromCompartment(TrainStation currentTrainStation) {
-        peopleOnBoard.removeIf(person -> person.getDestinationStation().getId() == currentTrainStation.getId());
+    public void removePeopleFromCompartment(Station currentStation) {
+        peopleOnBoard.removeIf(person -> person.getDestinationStation().getId() == currentStation.getId());
     }
 
     public boolean isFull() {
-        return peopleOnBoard.size() == compartmentPlacesNumber;
+        return peopleOnBoard.size() == capacity;
     }
 }

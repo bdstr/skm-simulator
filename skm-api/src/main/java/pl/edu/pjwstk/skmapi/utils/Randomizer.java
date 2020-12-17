@@ -1,4 +1,4 @@
-package pl.edu.pjwstk.skmapi.model;
+package pl.edu.pjwstk.skmapi.utils;
 
 import java.util.Random;
 
