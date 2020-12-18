@@ -10,13 +10,13 @@ public class Person {
     private final String name;
     private final Station destinationStation;
 
-    public Person(Station startingStation, Direction direction) {
+    public Person(Station startingStation, int direction) {
         name = generateRandomName();
         int randomStationNumber;
-        if (direction.getDirection() == Direction.START_TO_END) {
-            randomStationNumber = Randomizer.getRandomNumberInRange(startingStation.getId() + 1, Station.values().length - 1);
-        } else {
+        if (direction == 1) {
             randomStationNumber = Randomizer.getRandomNumberInRange(0, startingStation.getId() - 1);
+        } else {
+            randomStationNumber = Randomizer.getRandomNumberInRange(startingStation.getId() + 1, Station.values().length - 1);
         }
         destinationStation = Station.values()[randomStationNumber];
     }

@@ -1,50 +1,81 @@
 package pl.edu.pjwstk.skmapi.model;
 
+import pl.edu.pjwstk.skmapi.service.DbEntity;
 import pl.edu.pjwstk.skmapi.utils.Randomizer;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+import java.util.Set;
 
-public class Train {
+@Entity
+@Table(name = "trains")
+public class Train implements DbEntity {
 
-    private final Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @OneToMany(mappedBy = "train", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Compartment> compartments;
+
     private Station currentStation;
-    private final Direction direction;
+    private int direction;
     private int waitedTimeOnLastStation;
-    private final ArrayList<Compartment> compartments;
 
-    public Train(long id, int compartmentsNumber, int compartmentPlacesNumber) {
-        this.id = id;
-        this.currentStation = (Station) Randomizer.getRandomElementFromArray(Station.values());
-        this.direction = new Direction();
-        this.waitedTimeOnLastStation = 0;
-        this.compartments = new ArrayList<>();
-        for (long i = 0L; i < compartmentsNumber; i++) {
-            compartments.add(new Compartment(i, compartmentPlacesNumber));
-        }
+
+    public Train() {
     }
 
-    public long getID() {
+    public Long getId() {
         return id;
     }
 
-    public ArrayList<Compartment> getCompartmentsList() {
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Station getCurrentStation() {
+        return currentStation;
+    }
+
+    public void setCurrentStation(Station currentStation) {
+        this.currentStation = currentStation;
+    }
+
+    public int getDirection() {
+        return direction;
+    }
+
+    public void setDirection(int direction) {
+        this.direction = direction;
+    }
+
+    public int getWaitedTimeOnLastStation() {
+        return waitedTimeOnLastStation;
+    }
+
+    public void setWaitedTimeOnLastStation(int waitedTimeOnLastStation) {
+        this.waitedTimeOnLastStation = waitedTimeOnLastStation;
+    }
+
+    public Set<Compartment> getCompartments() {
         return compartments;
     }
 
-    public Station getCurrentTrainStation() {
-        return currentStation;
+    public void setCompartments(Set<Compartment> compartments) {
+        this.compartments = compartments;
+    }
+
+
+    public void moveTrainSimulationStepForward() {
+        if (currentStation.isLastStation()) {
+            waitOnLastStation(currentStation.getPauseTime());
+        } else {
+            makeMoveToNextStation();
+        }
     }
 
     public double getPercentageOfTrainFilling() {
         return (100.0 / getTotalNumberOfPlacesInTrain()) * getNumberOfPeopleOnBoard();
-    }
-
-    private int getTotalNumberOfPlacesInTrain() {
-        return compartments.stream()
-                .map(Compartment::getCapacity)
-                .reduce(Integer::sum)
-                .orElse(0);
     }
 
     public int getNumberOfPeopleOnBoard() {
@@ -53,12 +84,11 @@ public class Train {
                 .reduce(0, Integer::sum);
     }
 
-    public void moveTrainSimulationStepForward() {
-        if (currentStation.isLastStation()) {
-            waitOnLastStation(currentStation.getPauseTime());
-        } else {
-            makeMoveToNextStation();
-        }
+    private int getTotalNumberOfPlacesInTrain() {
+        return compartments.stream()
+                .map(Compartment::getCapacity)
+                .reduce(Integer::sum)
+                .orElse(0);
     }
 
     private void waitOnLastStation(int pauseTime) {
@@ -73,15 +103,15 @@ public class Train {
 
     private void changeDirection() {
         if (currentStation.getId() == 0) {
-            direction.setDirection(Direction.START_TO_END);
+            direction = 1;
         } else {
-            direction.setDirection(Direction.END_TO_START);
+            direction = -1;
         }
     }
 
     private void makeMoveToNextStation() {
         getNewPeopleOnBoard();
-        currentStation = Station.values()[currentStation.getId() + direction.getDirection()];
+        currentStation = Station.values()[currentStation.getId() + direction];
         removePeopleFromTrain();
     }
 

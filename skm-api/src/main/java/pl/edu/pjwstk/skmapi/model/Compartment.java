@@ -1,32 +1,69 @@
 package pl.edu.pjwstk.skmapi.model;
 
-import java.util.ArrayList;
+import pl.edu.pjwstk.skmapi.service.DbEntity;
+
+import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
-public class Compartment {
-    private final Long id;
-    private final int capacity;
-    private final List<Person> peopleOnBoard;
+@Entity
+@Table(name = "compartments")
+public class Compartment implements DbEntity {
 
-    public Compartment(Long id, int capacity) {
-        this.id = id;
-        this.capacity = capacity;
-        peopleOnBoard = new ArrayList<>();
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "train_id")
+    private Train train;
+
+    private int capacity;
+
+    @Transient
+    private Set<Person> peopleOnBoard;
+
+
+    public Compartment() {
     }
 
-    public Long getID() {
+    public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public Set<Person> getPeopleOnBoard() {
+        return peopleOnBoard;
+    }
+
+    public void setPeopleOnBoard(Set<Person> peopleOnBoard) {
+        this.peopleOnBoard = peopleOnBoard;
+    }
+
+    public Train getTrain() {
+        return train;
+    }
+
+    public void setTrain(Train train) {
+        this.train = train;
     }
 
     public List<String> getPeopleOnBoardNames() {
         LinkedList<String> peoplesNamesList = new LinkedList<>();
         peopleOnBoard.forEach(person -> peoplesNamesList.add(person.getName()));
         return peoplesNamesList;
-    }
-
-    public int getCapacity() {
-        return capacity;
     }
 
     public int getNumberOfPeopleOnBoard() {

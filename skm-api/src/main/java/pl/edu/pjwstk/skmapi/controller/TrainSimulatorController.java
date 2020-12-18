@@ -1,3 +1,4 @@
+/*
 package pl.edu.pjwstk.skmapi.controller;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -8,11 +9,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import pl.edu.pjwstk.skmapi.model.Compartment;
-import pl.edu.pjwstk.skmapi.model.statuses.CompartmentStatus;
 import pl.edu.pjwstk.skmapi.model.Train;
+import pl.edu.pjwstk.skmapi.model.statuses.CompartmentStatus;
 import pl.edu.pjwstk.skmapi.model.statuses.TrainStatus;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
@@ -25,9 +28,11 @@ public class TrainSimulatorController {
                                     @Value("${configuration.compartmentPlacesNumber}") int compartmentPlacesNumber) {
         trainList = new ArrayList<>();
         for (int i = 0; i < trainsNumber; i++) {
-            trainList.add(new Train(i, compartmentsNumber, compartmentPlacesNumber));
+            trainList.add(new Train());
         }
     }
+*/
+/*
 
     @PostMapping("/move")
     public String moveForward() {
@@ -36,6 +41,8 @@ public class TrainSimulatorController {
         }
         return "OK";
     }
+*//*
+
 
     @GetMapping("/trains")
     public LinkedHashMap<String, Object> getTrainsIDList() {
@@ -49,7 +56,7 @@ public class TrainSimulatorController {
     public TrainStatus getTrainStatus(@PathVariable(value = "id") int trainID) {
         Train selectedTrain = getTrainByID(trainID);
         return new TrainStatus(selectedTrain.getID(),
-                selectedTrain.getCurrentTrainStation(),
+                selectedTrain.getCurrentStation(),
                 selectedTrain.getNumberOfPeopleOnBoard(),
                 selectedTrain.getPercentageOfTrainFilling());
     }
@@ -76,7 +83,7 @@ public class TrainSimulatorController {
         Train selectedTrain = getTrainByID(trainID);
         Compartment selectedCompartment = null;
         try {
-            selectedCompartment = selectedTrain.getCompartmentsList().get(compartmentID);
+            selectedCompartment = selectedTrain.getCompartments().get(compartmentID);
         } catch (IndexOutOfBoundsException e) {
             throwResponseCode404("Compartment not found");
         }
@@ -87,3 +94,4 @@ public class TrainSimulatorController {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, message);
     }
 }
+*/
