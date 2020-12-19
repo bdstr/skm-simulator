@@ -3,6 +3,7 @@ package pl.edu.pjwstk.skmapi.model;
 import pl.edu.pjwstk.skmapi.service.DbEntity;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -12,7 +13,7 @@ import java.util.Set;
 public class Compartment implements DbEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -26,6 +27,7 @@ public class Compartment implements DbEntity {
 
 
     public Compartment() {
+        peopleOnBoard = new HashSet<>();
     }
 
     public Long getId() {

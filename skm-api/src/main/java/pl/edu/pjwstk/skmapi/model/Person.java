@@ -13,7 +13,7 @@ public class Person {
     public Person(Station startingStation, int direction) {
         name = generateRandomName();
         int randomStationNumber;
-        if (direction == 1) {
+        if (direction == -1) {
             randomStationNumber = Randomizer.getRandomNumberInRange(0, startingStation.getId() - 1);
         } else {
             randomStationNumber = Randomizer.getRandomNumberInRange(startingStation.getId() + 1, Station.values().length - 1);

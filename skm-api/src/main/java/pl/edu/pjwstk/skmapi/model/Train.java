@@ -4,6 +4,7 @@ import pl.edu.pjwstk.skmapi.service.DbEntity;
 import pl.edu.pjwstk.skmapi.utils.Randomizer;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -11,7 +12,7 @@ import java.util.Set;
 public class Train implements DbEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToMany(mappedBy = "train", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -28,6 +29,7 @@ public class Train implements DbEntity {
 
 
     public Train() {
+        compartments = new HashSet<>();
     }
 
     public Long getId() {

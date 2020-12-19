@@ -40,15 +40,15 @@ public class TrainService extends CrudService<Train> {
 
             dbEntity.setCurrentStation(fallbackIfNull(updateEntity.getCurrentStation(), dbEntity.getCurrentStation()));
             dbEntity.setWaitedTimeOnLastStation(fallbackIfNull(updateEntity.getWaitedTimeOnLastStation(), dbEntity.getWaitedTimeOnLastStation()));
-            dbEntity.setDirection(fallbackIfNull(updateEntity.getDirection(), dbEntity.getDirection()));
+            dbEntity.setDirection(updateEntity.getDirection() == 1 ? 1 : updateEntity.getDirection() == -1 ? -1 : dbEntity.getDirection());
             dbEntity.setCompartments(fallbackIfNull(updateEntity.getCompartments(), dbEntity.getCompartments()));
-            var insertedCar = repository.save(dbEntity);
+            var insertedTrain = repository.save(dbEntity);
 
             Set<Compartment> compartments = updateEntity.getCompartments();
             compartments.forEach(compartment -> compartment.setTrain(dbEntity));
             compartmentRepository.saveAll(compartments);
 
-            return insertedCar;
+            return insertedTrain;
         } else {
             updateEntity = repository.save(updateEntity);
 
