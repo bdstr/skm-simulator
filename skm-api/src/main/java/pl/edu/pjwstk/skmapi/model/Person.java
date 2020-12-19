@@ -1,11 +1,8 @@
 package pl.edu.pjwstk.skmapi.model;
 
-import com.github.javafaker.Faker;
 import pl.edu.pjwstk.skmapi.service.DbEntity;
-import pl.edu.pjwstk.skmapi.utils.Randomizer;
 
 import javax.persistence.*;
-import java.util.Locale;
 
 @Entity
 @Table(name = "people")
@@ -26,6 +23,12 @@ public class Person implements DbEntity {
     private Compartment compartment;
 
     public Person() {
+    }
+
+    public Person(String name, Station destinationStation, Compartment compartment) {
+        this.name = name;
+        this.destinationStation = destinationStation;
+        this.compartment = compartment;
     }
 
     public Long getId() {

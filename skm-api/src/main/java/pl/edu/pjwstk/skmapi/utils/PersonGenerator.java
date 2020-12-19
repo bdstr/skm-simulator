@@ -1,38 +1,25 @@
-package pl.edu.pjwstk.skmapi.service;
+package pl.edu.pjwstk.skmapi.utils;
 
 import com.github.javafaker.Faker;
-import org.springframework.stereotype.Service;
 import pl.edu.pjwstk.skmapi.model.Compartment;
 import pl.edu.pjwstk.skmapi.model.Person;
 import pl.edu.pjwstk.skmapi.model.Station;
-import pl.edu.pjwstk.skmapi.repository.PersonRepository;
-import pl.edu.pjwstk.skmapi.utils.Randomizer;
 
 import java.util.Locale;
 
-@Service
-public class PersonService {
+public class PersonGenerator {
 
-    private final PersonRepository repository;
-
-    public PersonService(PersonRepository repository) {
-        this.repository = repository;
-    }
-
-    public Person create(Compartment compartment, Station startingStation, int direction) {
+    public Person generate(Station startingStation, int direction, Compartment compartment) {
+        String name = generateRandomName();
         int randomStationNumber;
         if (direction == -1) {
             randomStationNumber = Randomizer.getRandomNumberInRange(0, startingStation.getId() - 1);
         } else {
             randomStationNumber = Randomizer.getRandomNumberInRange(startingStation.getId() + 1, Station.values().length - 1);
         }
+        Station destinationStation = Station.values()[randomStationNumber];
 
-        var person = new Person();
-        person.setName(generateRandomName());
-        person.setDestinationStation(Station.values()[randomStationNumber]);
-        person.setCompartment(compartment);
-
-        return repository.save(person);
+        return new Person(name, destinationStation, compartment);
     }
 
     private String generateRandomName() {

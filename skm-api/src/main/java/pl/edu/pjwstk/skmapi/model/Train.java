@@ -1,6 +1,7 @@
 package pl.edu.pjwstk.skmapi.model;
 
 import pl.edu.pjwstk.skmapi.service.DbEntity;
+import pl.edu.pjwstk.skmapi.utils.PersonGenerator;
 import pl.edu.pjwstk.skmapi.utils.Randomizer;
 
 import javax.persistence.*;
@@ -124,9 +125,11 @@ public class Train implements DbEntity {
 
     private void getNewPeopleOnBoard() {
         int newPeopleNumber = Math.min(Randomizer.getRandomNumberInRange(2, 8), getNumberOfFreePlacesInTrain());
+        PersonGenerator personGenerator = new PersonGenerator();
         for (int i = 0; i < newPeopleNumber; i++) {
             Compartment notFullCompartment = getRandomNotFullCompartment();
-            notFullCompartment.addPersonOnBoard(new Person(currentStation, direction));
+            var person = personGenerator.generate(currentStation, direction, notFullCompartment);
+            notFullCompartment.addPersonOnBoard(person);
         }
     }
 
