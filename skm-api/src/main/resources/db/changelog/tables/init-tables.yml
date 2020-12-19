@@ -11,6 +11,10 @@ databaseChangeLog:
           not:
             tableExists:
               tableName: compartments
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: people
       changes:
         - createTable:
             tableName: trains
@@ -59,3 +63,31 @@ databaseChangeLog:
                     nullable: false
                     foreignKeyName: compartment_train_id_fkey
                     references: trains(id)
+        - createTable:
+            tableName: people
+            columns:
+              - column:
+                  name: id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: person_id_pkey
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: destination_station
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: compartment_id
+                  type: INT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: person_compartment_id_fkey
+                    references: compartments(id)

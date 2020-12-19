@@ -4,8 +4,6 @@ import pl.edu.pjwstk.skmapi.service.DbEntity;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -22,7 +20,7 @@ public class Compartment implements DbEntity {
 
     private int capacity;
 
-    @Transient
+    @OneToMany(mappedBy = "compartment", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Person> peopleOnBoard;
 
 
@@ -62,11 +60,6 @@ public class Compartment implements DbEntity {
         this.train = train;
     }
 
-    public List<String> getPeopleOnBoardNames() {
-        LinkedList<String> peoplesNamesList = new LinkedList<>();
-        peopleOnBoard.forEach(person -> peoplesNamesList.add(person.getName()));
-        return peoplesNamesList;
-    }
 
     public int getNumberOfPeopleOnBoard() {
         return peopleOnBoard.size();
@@ -81,6 +74,6 @@ public class Compartment implements DbEntity {
     }
 
     public boolean isFull() {
-        return peopleOnBoard.size() == capacity;
+        return peopleOnBoard.size() >= capacity;
     }
 }

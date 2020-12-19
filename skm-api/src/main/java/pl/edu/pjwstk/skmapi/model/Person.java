@@ -1,38 +1,62 @@
 package pl.edu.pjwstk.skmapi.model;
 
 import com.github.javafaker.Faker;
+import pl.edu.pjwstk.skmapi.service.DbEntity;
 import pl.edu.pjwstk.skmapi.utils.Randomizer;
 
+import javax.persistence.*;
 import java.util.Locale;
 
-public class Person {
+@Entity
+@Table(name = "people")
+public class Person implements DbEntity {
 
-    private final String name;
-    private final Station destinationStation;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    public Person(Station startingStation, int direction) {
-        name = generateRandomName();
-        int randomStationNumber;
-        if (direction == -1) {
-            randomStationNumber = Randomizer.getRandomNumberInRange(0, startingStation.getId() - 1);
-        } else {
-            randomStationNumber = Randomizer.getRandomNumberInRange(startingStation.getId() + 1, Station.values().length - 1);
-        }
-        destinationStation = Station.values()[randomStationNumber];
+    private String name;
+
+    @Column(name = "destination_station")
+    @Enumerated(EnumType.STRING)
+    private Station destinationStation;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "compartment_id")
+    private Compartment compartment;
+
+    public Person() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Station getDestinationStation() {
         return destinationStation;
     }
 
-    private String generateRandomName() {
-        Faker faker = new Faker(new Locale("pl"));
-        String firstName = faker.name().firstName();
-        String lastName = faker.name().lastName();
-        return firstName + " " + lastName;
+    public void setDestinationStation(Station destinationStation) {
+        this.destinationStation = destinationStation;
+    }
+
+    public Compartment getCompartment() {
+        return compartment;
+    }
+
+    public void setCompartment(Compartment compartment) {
+        this.compartment = compartment;
     }
 }
