@@ -3,8 +3,8 @@ package pl.edu.pjwstk.skmapi.service;
 import org.springframework.stereotype.Service;
 import pl.edu.pjwstk.skmapi.model.Compartment;
 import pl.edu.pjwstk.skmapi.model.Train;
-import pl.edu.pjwstk.skmapi.model.repository.CompartmentRepository;
-import pl.edu.pjwstk.skmapi.model.repository.TrainRepository;
+import pl.edu.pjwstk.skmapi.repository.CompartmentRepository;
+import pl.edu.pjwstk.skmapi.repository.TrainRepository;
 
 import java.util.Collections;
 import java.util.Optional;

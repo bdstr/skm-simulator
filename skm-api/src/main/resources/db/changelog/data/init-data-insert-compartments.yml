@@ -1,0 +1,50 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2020_12_18-initial-data-compartments
+      author: marcin.kloczkowski
+      changes:
+        - insert:
+            tableName: compartments
+            columns:
+              - column:
+                  name: capacity
+                  value: "10"
+              - column:
+                  name: train_id
+                  value: "1"
+        - insert:
+            tableName: compartments
+            columns:
+              - column:
+                  name: capacity
+                  value: "15"
+              - column:
+                  name: train_id
+                  value: "1"
+        - insert:
+            tableName: compartments
+            columns:
+              - column:
+                  name: capacity
+                  value: "20"
+              - column:
+                  name: train_id
+                  value: "1"
+        - insert:
+            tableName: compartments
+            columns:
+              - column:
+                  name: capacity
+                  value: "20"
+              - column:
+                  name: train_id
+                  value: "2"
+        - insert:
+            tableName: compartments
+            columns:
+              - column:
+                  name: capacity
+                  value: "30"
+              - column:
+                  name: train_id
+                  value: "2"

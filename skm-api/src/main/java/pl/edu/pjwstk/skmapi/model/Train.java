@@ -17,8 +17,13 @@ public class Train implements DbEntity {
     @OneToMany(mappedBy = "train", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Compartment> compartments;
 
+    @Column(name = "current_station")
+    @Enumerated(EnumType.STRING)
     private Station currentStation;
+
     private int direction;
+
+    @Column(name = "waited_time_on_last_station")
     private int waitedTimeOnLastStation;
 
 

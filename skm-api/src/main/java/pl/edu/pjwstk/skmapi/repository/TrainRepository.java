@@ -1,4 +1,4 @@
-package pl.edu.pjwstk.skmapi.model.repository;
+package pl.edu.pjwstk.skmapi.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2020_12_18-initial-data-trains
+      author: marcin.kloczkowski
+      changes:
+        - insert:
+            tableName: trains
+            columns:
+              - column:
+                  name: current_station
+                  value: "GDYNIA_GLOWNA"
+              - column:
+                  name: direction
+                  value: "-1"
+              - column:
+                  name: waited_time_on_last_station
+                  value: "2"
+        - insert:
+            tableName: trains
+            columns:
+              - column:
+                  name: current_station
+                  value: "GDANSK_GLOWNY"
+              - column:
+                  name: direction
+                  value: "1"
+              - column:
+                  name: waited_time_on_last_station
+                  value: "2"

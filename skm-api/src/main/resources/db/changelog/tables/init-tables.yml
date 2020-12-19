@@ -1,0 +1,61 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2020_12_18-initial-tables
+      author: marcin.kloczkowski
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: trains
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: compartments
+      changes:
+        - createTable:
+            tableName: trains
+            columns:
+              - column:
+                  name: id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: train_id_pkey
+              - column:
+                  name: current_station
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: direction
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: waited_time_on_last_station
+                  type: INT
+        - createTable:
+            tableName: compartments
+            columns:
+              - column:
+                  name: id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: compartment_id_pkey
+              - column:
+                  name: capacity
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: train_id
+                  type: INT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: compartment_train_id_fkey
+                    references: trains(id)
