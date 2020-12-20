@@ -1,4 +1,4 @@
-package pl.edu.pjwstk.skmapi.model;
+package pl.edu.pjwstk.skmapi.model.enums;
 
 public enum Station {
     GDYNIA_GLOWNA(0, "Gdynia Główna", 2),

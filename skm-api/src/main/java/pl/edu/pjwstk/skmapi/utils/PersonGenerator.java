@@ -3,7 +3,7 @@ package pl.edu.pjwstk.skmapi.utils;
 import com.github.javafaker.Faker;
 import pl.edu.pjwstk.skmapi.model.Compartment;
 import pl.edu.pjwstk.skmapi.model.Person;
-import pl.edu.pjwstk.skmapi.model.Station;
+import pl.edu.pjwstk.skmapi.model.enums.Station;
 
 import java.util.Locale;
 

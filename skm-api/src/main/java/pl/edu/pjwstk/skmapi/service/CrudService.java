@@ -2,6 +2,7 @@ package pl.edu.pjwstk.skmapi.service;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,6 +32,8 @@ public abstract class CrudService<T extends DbEntity> {
 
         if (item.isPresent()) {
             repository.delete(item.orElseThrow());
+        } else {
+            throw new EntityNotFoundException();
         }
     }
 

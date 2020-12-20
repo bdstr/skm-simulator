@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.edu.pjwstk.skmapi.service.CrudService;
 import pl.edu.pjwstk.skmapi.service.DbEntity;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -73,6 +74,8 @@ public abstract class CrudController<T extends DbEntity> {
         try {
             service.delete(id);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
