@@ -183,19 +183,4 @@ class TrainServiceTest {
         assertEquals(train.getDirection(), result.getDirection());
         assertEquals(train.getWaitedTimeOnLastStation(), result.getWaitedTimeOnLastStation());
     }
-
-    @Test
-    void moveSimulationStepForwardCallsMethodOnAllTrainsAndSavesThem() {
-        Train train1 = Mockito.mock(Train.class);
-        Train train2 = Mockito.mock(Train.class);
-        List<Train> list = List.of(train1, train2);
-
-        when(trainRepository.findAll()).thenReturn(list);
-
-        trainService.moveSimulationStepForward();
-
-        verify(train1).moveTrainSimulationStepForward();
-        verify(train2).moveTrainSimulationStepForward();
-        verify(trainRepository).saveAll(list);
-    }
 }

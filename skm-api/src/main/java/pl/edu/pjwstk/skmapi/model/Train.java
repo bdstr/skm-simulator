@@ -2,8 +2,6 @@ package pl.edu.pjwstk.skmapi.model;
 
 import pl.edu.pjwstk.skmapi.model.enums.Station;
 import pl.edu.pjwstk.skmapi.service.DbEntity;
-import pl.edu.pjwstk.skmapi.utils.PersonGenerator;
-import pl.edu.pjwstk.skmapi.utils.Randomizer;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -74,15 +72,6 @@ public class Train implements DbEntity {
         this.compartments = compartments;
     }
 
-
-    public void moveTrainSimulationStepForward() {
-        if (currentStation.isLastStation()) {
-            waitOnLastStation(currentStation.getPauseTime());
-        } else {
-            makeMoveToNextStation();
-        }
-    }
-
     public double getPercentageOfTrainFilling() {
         return (100.0 / getTotalNumberOfPlacesInTrain()) * getNumberOfPeopleOnBoard();
     }
@@ -93,61 +82,15 @@ public class Train implements DbEntity {
                 .reduce(0, Integer::sum);
     }
 
-    private int getTotalNumberOfPlacesInTrain() {
+    public int getTotalNumberOfPlacesInTrain() {
         return compartments.stream()
                 .map(Compartment::getCapacity)
                 .reduce(Integer::sum)
                 .orElse(0);
     }
 
-    private void waitOnLastStation(int pauseTime) {
-        if (waitedTimeOnLastStation >= pauseTime) {
-            waitedTimeOnLastStation = 0;
-            changeDirection();
-            makeMoveToNextStation();
-        } else {
-            waitedTimeOnLastStation++;
-        }
-    }
-
-    private void changeDirection() {
-        if (currentStation.getId() == 0) {
-            direction = 1;
-        } else {
-            direction = -1;
-        }
-    }
-
-    private void makeMoveToNextStation() {
-        getNewPeopleOnBoard();
-        currentStation = Station.values()[currentStation.getId() + direction];
-        removePeopleFromTrain();
-    }
-
-    private void getNewPeopleOnBoard() {
-        int newPeopleNumber = Math.min(Randomizer.getRandomNumberInRange(2, 8), getNumberOfFreePlacesInTrain());
-        PersonGenerator personGenerator = new PersonGenerator();
-        for (int i = 0; i < newPeopleNumber; i++) {
-            Compartment notFullCompartment = getRandomNotFullCompartment();
-            var person = personGenerator.generate(currentStation, direction, notFullCompartment);
-            notFullCompartment.addPersonOnBoard(person);
-        }
-    }
-
-    private Compartment getRandomNotFullCompartment() {
-        Compartment[] notFullCompartments = compartments.stream()
-                .filter(compartment -> !compartment.isFull())
-                .toArray(Compartment[]::new);
-        return (Compartment) Randomizer.getRandomElementFromArray(notFullCompartments);
-    }
-
-    private int getNumberOfFreePlacesInTrain() {
+    public int getNumberOfFreePlacesInTrain() {
         return getTotalNumberOfPlacesInTrain() - getNumberOfPeopleOnBoard();
     }
-
-    private void removePeopleFromTrain() {
-        compartments.forEach(compartment -> compartment.removePeopleFromCompartment(currentStation));
-    }
-
 }
 

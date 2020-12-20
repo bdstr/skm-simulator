@@ -55,10 +55,4 @@ public class TrainService extends CrudService<Train> {
             return updateEntity;
         }
     }
-
-    public void moveSimulationStepForward() {
-        var trains = repository.findAll();
-        trains.forEach(Train::moveTrainSimulationStepForward);
-        repository.saveAll(trains);
-    }
 }

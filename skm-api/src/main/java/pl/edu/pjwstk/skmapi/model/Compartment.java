@@ -70,10 +70,6 @@ public class Compartment implements DbEntity {
         peopleOnBoard.add(person);
     }
 
-    public void removePeopleFromCompartment(Station currentStation) {
-        peopleOnBoard.removeIf(person -> person.getDestinationStation().getId() == currentStation.getId());
-    }
-
     public boolean isFull() {
         return peopleOnBoard.size() >= capacity;
     }
