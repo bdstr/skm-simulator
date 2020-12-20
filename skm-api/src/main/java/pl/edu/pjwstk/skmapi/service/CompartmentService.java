@@ -1,18 +1,23 @@
 package pl.edu.pjwstk.skmapi.service;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import pl.edu.pjwstk.skmapi.model.Compartment;
+import pl.edu.pjwstk.skmapi.model.Person;
+import pl.edu.pjwstk.skmapi.repository.CompartmentRepository;
+import pl.edu.pjwstk.skmapi.repository.PersonRepository;
 
 import java.util.Optional;
+import java.util.Set;
 
 import static pl.edu.pjwstk.skmapi.utils.Utils.fallbackIfNull;
 
 @Service
 public class CompartmentService extends CrudService<Compartment> {
+    private final PersonRepository personRepository;
 
-    public CompartmentService(JpaRepository<Compartment, Long> repository) {
+    public CompartmentService(CompartmentRepository repository, PersonRepository personRepository) {
         super(repository);
+        this.personRepository = personRepository;
     }
 
     @Override
@@ -28,9 +33,12 @@ public class CompartmentService extends CrudService<Compartment> {
 
             dbEntity.setTrain(fallbackIfNull(updateEntity.getTrain(), dbEntity.getTrain()));
             dbEntity.setCapacity(fallbackIfNull(updateEntity.getCapacity(), dbEntity.getCapacity()));
-            dbEntity.setPeopleOnBoard(fallbackIfNull(updateEntity.getPeopleOnBoard(), dbEntity.getPeopleOnBoard()));
+            var insertedCompartment = repository.save(dbEntity);
 
-            return repository.save(dbEntity);
+            Set<Person> peopleOnBoard = updateEntity.getPeopleOnBoard();
+            peopleOnBoard.forEach(person -> person.setCompartment(dbEntity));
+            personRepository.saveAll(peopleOnBoard);
+            return insertedCompartment;
         } else {
             updateEntity = repository.save(updateEntity);
 
