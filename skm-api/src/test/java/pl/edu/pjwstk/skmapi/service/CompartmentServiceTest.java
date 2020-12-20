@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import pl.edu.pjwstk.skmapi.model.Compartment;
 import pl.edu.pjwstk.skmapi.repository.CompartmentRepository;
+import pl.edu.pjwstk.skmapi.repository.PersonRepository;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
@@ -23,6 +24,9 @@ class CompartmentServiceTest {
 
     @Mock
     CompartmentRepository compartmentRepository;
+
+    @Mock
+    PersonRepository personRepository;
 
     @InjectMocks
     CompartmentService compartmentService;
