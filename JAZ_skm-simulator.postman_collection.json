@@ -1,0 +1,356 @@
+{
+	"info": {
+		"_postman_id": "206371d5-2f0e-4c07-b0c4-aaad2b6b2b84",
+		"name": "JAZ skm-simulator",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "API",
+			"item": [
+				{
+					"name": "CRUD Trains",
+					"item": [
+						{
+							"name": "GET Train 1",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9000/trains/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"trains",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ADD Train",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"direction\": 1,\n    \"currentStation\": \"GDANSK_OLIWA\",\n    \"waitedTimeOnLastStation\": 0\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9000/trains",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"trains"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE Train 3",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9000/trains/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"trains",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UPDATE Train 1",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 1,\n    \"currentStation\": \"SOPOT\",\n    \"direction\": -1,\n    \"waitedTimeOnLastStation\": 0\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9000/trains",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"trains"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "CRUD Compartments",
+					"item": [
+						{
+							"name": "GET Compartment 1",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9000/compartments/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"compartments",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ADD Compartment",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"capacity\": 20,\n    \"train\": {\n        \"id\": 1\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9000/compartments",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"compartments"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE Compartment 3",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9000/compartments/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"compartments",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UPDATE Compartment 1",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 1,\n    \"capacity\": 20,\n    \"train\": {\n        \"id\": 1\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9000/compartments",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"compartments"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "API POST Move forward",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/move",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"move"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Trains list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/trains",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"trains"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Compartments list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/compartments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"compartments"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CLIENT",
+			"item": [
+				{
+					"name": "GET Trains list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/show-trains",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"show-trains"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Compartments list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/show-compartments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"show-compartments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Train 1 detailed info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/show-train/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"show-train",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Compartment 1 detailed info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/show-compartment/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"show-compartment",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
