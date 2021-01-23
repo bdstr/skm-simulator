@@ -31,12 +31,12 @@ public class TokenAuthorizationFilter extends BasicAuthenticationFilter {
         String header = request.getHeader(HEADER_STRING);
         if (header == null || !header.startsWith(TOKEN_PREFIX)) {
             chain.doFilter(request, response);
+        } else {
+            UsernamePasswordAuthenticationToken authentication = getAuthentication(request);
+
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            chain.doFilter(request, response);
         }
-
-        UsernamePasswordAuthenticationToken authentication = getAuthentication(request);
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        chain.doFilter(request, response);
     }
 
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
