@@ -36,7 +36,9 @@ public class TokenAuthenticationFilter extends UsernamePasswordAuthenticationFil
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
             User user = new ObjectMapper().readValue(request.getInputStream(), User.class);
-            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user.getUsername(),
+
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                    user.getUsername(),
                     user.getPassword(),
                     Collections.emptyList());
             return authenticationManager.authenticate(authentication);
@@ -50,6 +52,7 @@ public class TokenAuthenticationFilter extends UsernamePasswordAuthenticationFil
                                             HttpServletResponse response,
                                             FilterChain chain,
                                             Authentication auth) throws IOException {
+
         var subject = auth.getPrincipal().toString();
 
         List<String> authorities = auth.getAuthorities().stream()
