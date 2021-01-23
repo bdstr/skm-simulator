@@ -1,0 +1,36 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2021_01_23-initial-users-table
+      author: marcin.kloczkowski
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: users
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: user_id_pkey
+              - column:
+                  name: username
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: password
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: authorities
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
