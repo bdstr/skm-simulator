@@ -1,10 +1,10 @@
-package pl.edu.pjwstk.skmapi.security;
+package pl.edu.pjwstk.skmapi.model;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "users")
-public class UserEntity {
+public class User implements DbEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

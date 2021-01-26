@@ -11,15 +11,15 @@ import org.springframework.stereotype.Component;
 public class UsernamePasswordAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
-    private UserService userService;
+    private UserDetailsServiceImpl userDetailsServiceImpl;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         var username = authentication.getPrincipal().toString();
         var password = authentication.getCredentials().toString();
 
-        var userDetails = userService.loadUserByUsername(username);
-        var matches = userService.getPasswordEncoder().matches(password, userDetails.getPassword());
+        var userDetails = userDetailsServiceImpl.loadUserByUsername(username);
+        var matches = userDetailsServiceImpl.getPasswordEncoder().matches(password, userDetails.getPassword());
 
         if (matches) {
             return new UsernamePasswordAuthenticationToken(

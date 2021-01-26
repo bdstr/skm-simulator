@@ -1,8 +1,5 @@
 package pl.edu.pjwstk.skmapi.model;
 
-import pl.edu.pjwstk.skmapi.model.enums.Station;
-import pl.edu.pjwstk.skmapi.service.DbEntity;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;

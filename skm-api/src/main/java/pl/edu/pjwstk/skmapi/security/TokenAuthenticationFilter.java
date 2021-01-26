@@ -35,11 +35,11 @@ public class TokenAuthenticationFilter extends UsernamePasswordAuthenticationFil
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
-            User user = new ObjectMapper().readValue(request.getInputStream(), User.class);
+            UserDetailsImpl userDetails = new ObjectMapper().readValue(request.getInputStream(), UserDetailsImpl.class);
 
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                    user.getUsername(),
-                    user.getPassword(),
+                    userDetails.getUsername(),
+                    userDetails.getPassword(),
                     Collections.emptyList());
             return authenticationManager.authenticate(authentication);
         } catch (IOException e) {

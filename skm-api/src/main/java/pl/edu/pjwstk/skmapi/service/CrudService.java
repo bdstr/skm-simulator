@@ -1,6 +1,7 @@
 package pl.edu.pjwstk.skmapi.service;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import pl.edu.pjwstk.skmapi.model.DbEntity;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package pl.edu.pjwstk.skmapi.service;
+package pl.edu.pjwstk.skmapi.model;
 
 public interface DbEntity {
     Long getId();
