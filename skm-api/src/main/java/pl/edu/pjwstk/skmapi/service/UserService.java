@@ -1,6 +1,5 @@
 package pl.edu.pjwstk.skmapi.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.edu.pjwstk.skmapi.model.User;
@@ -14,11 +13,11 @@ import static pl.edu.pjwstk.skmapi.utils.Utils.fallbackIfNull;
 @Service
 public class UserService extends CrudService<User> {
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         super(userRepository);
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -30,9 +29,9 @@ public class UserService extends CrudService<User> {
             }
             var password = updateEntity.getPassword();
             if (password == null || password.length() < 8) {
-                updateEntity.setPassword(passwordEncoder.encode(password));
-            } else {
                 throw new RuntimeException("Provide strong password!");
+            } else {
+                updateEntity.setPassword(passwordEncoder.encode(password));
             }
 
             return repository.save(updateEntity);
