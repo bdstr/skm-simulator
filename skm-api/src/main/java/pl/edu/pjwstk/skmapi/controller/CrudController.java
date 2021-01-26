@@ -41,8 +41,9 @@ public abstract class CrudController<T extends DbEntity> {
         try {
             T obj = service.getById(id);
             Map<String, Object> payload = transformToDTO().apply(obj);
-
             return new ResponseEntity<>(payload, HttpStatus.OK);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -53,6 +54,8 @@ public abstract class CrudController<T extends DbEntity> {
         try {
             service.createOrUpdate(t);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

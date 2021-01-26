@@ -76,16 +76,16 @@ class CompartmentServiceTest {
     }
 
     @Test
-    public void getByIdShouldReturnNullWhenCompartmentIsNotPresent() {
+    public void getByIdShouldThrowEntityNotFoundExceptionWhenCompartmentIsNotPresent() {
         Long id = 1L;
 
         when(compartmentRepository.findById(id)).thenReturn(Optional.empty());
 
-        var result = compartmentService.getById(id);
+        assertThrows(EntityNotFoundException.class, () -> {
+            compartmentService.getById(id);
+        });
 
         verify(compartmentRepository).findById(id);
-
-        assertNull(result);
     }
 
     @Test
@@ -151,7 +151,7 @@ class CompartmentServiceTest {
     }
 
     @Test
-    public void createOrUpdateInsertsCompartmentIfItHasIdAndIsNotPresentInDatabase() {
+    public void createOrUpdateTrainShouldThrowEntityNotFoundExceptionIfItHasIdAndIsNotPresentInDatabase() {
         Compartment compartment = new Compartment();
         compartment.setId(1L);
         compartment.setCapacity(20);
@@ -159,9 +159,8 @@ class CompartmentServiceTest {
         when(compartmentRepository.findById(compartment.getId())).thenReturn(Optional.empty());
         when(compartmentRepository.save(any(Compartment.class))).then(AdditionalAnswers.returnsFirstArg());
 
-        var result = compartmentService.createOrUpdate(compartment);
-
-        assertEquals(compartment.getId(), result.getId());
-        assertEquals(compartment.getCapacity(), result.getCapacity());
+        assertThrows(EntityNotFoundException.class, () -> {
+            compartmentService.createOrUpdate(compartment);
+        });
     }
 }

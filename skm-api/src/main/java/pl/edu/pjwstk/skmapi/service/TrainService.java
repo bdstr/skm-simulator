@@ -6,6 +6,7 @@ import pl.edu.pjwstk.skmapi.model.Train;
 import pl.edu.pjwstk.skmapi.repository.CompartmentRepository;
 import pl.edu.pjwstk.skmapi.repository.TrainRepository;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
@@ -49,9 +50,7 @@ public class TrainService extends CrudService<Train> {
 
             return insertedTrain;
         } else {
-            updateEntity = repository.save(updateEntity);
-
-            return updateEntity;
+            throw new EntityNotFoundException();
         }
     }
 }

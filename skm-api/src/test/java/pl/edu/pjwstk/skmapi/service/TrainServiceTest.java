@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.AdditionalAnswers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import pl.edu.pjwstk.skmapi.model.Train;
 import pl.edu.pjwstk.skmapi.model.enums.Station;
@@ -78,16 +77,16 @@ class TrainServiceTest {
     }
 
     @Test
-    public void getByIdShouldReturnNullWhenTrainIsNotPresent() {
+    public void getByIdShouldThrowEntityNotFoundExceptionWhenTrainIsNotPresent() {
         Long id = 1L;
 
         when(trainRepository.findById(id)).thenReturn(Optional.empty());
 
-        var result = trainService.getById(id);
+        assertThrows(EntityNotFoundException.class, () -> {
+            trainService.getById(id);
+        });
 
         verify(trainRepository).findById(id);
-
-        assertNull(result);
     }
 
     @Test
@@ -166,7 +165,7 @@ class TrainServiceTest {
     }
 
     @Test
-    public void createOrUpdateInsertsTrainIfItHasIdAndIsNotPresentInDatabase() {
+    public void createOrUpdateTrainShouldThrowEntityNotFoundExceptionIfItHasIdAndIsNotPresentInDatabase() {
         Train train = new Train();
         train.setId(1L);
         train.setDirection(1);
@@ -176,11 +175,8 @@ class TrainServiceTest {
         when(trainRepository.findById(train.getId())).thenReturn(Optional.empty());
         when(trainRepository.save(any(Train.class))).then(AdditionalAnswers.returnsFirstArg());
 
-        var result = trainService.createOrUpdate(train);
-
-        assertEquals(train.getId(), result.getId());
-        assertEquals(train.getCurrentStation(), result.getCurrentStation());
-        assertEquals(train.getDirection(), result.getDirection());
-        assertEquals(train.getWaitedTimeOnLastStation(), result.getWaitedTimeOnLastStation());
+        assertThrows(EntityNotFoundException.class, () -> {
+            trainService.createOrUpdate(train);
+        });
     }
 }

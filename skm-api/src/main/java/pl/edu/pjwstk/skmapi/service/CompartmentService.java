@@ -6,6 +6,7 @@ import pl.edu.pjwstk.skmapi.model.Person;
 import pl.edu.pjwstk.skmapi.repository.CompartmentRepository;
 import pl.edu.pjwstk.skmapi.repository.PersonRepository;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 import java.util.Set;
 
@@ -40,9 +41,7 @@ public class CompartmentService extends CrudService<Compartment> {
             personRepository.saveAll(peopleOnBoard);
             return insertedCompartment;
         } else {
-            updateEntity = repository.save(updateEntity);
-
-            return updateEntity;
+            throw new EntityNotFoundException();
         }
     }
 }

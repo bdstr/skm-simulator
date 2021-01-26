@@ -25,7 +25,7 @@ public abstract class CrudService<T extends DbEntity> {
     }
 
     public T getById(Long id) {
-        return repository.findById(id).orElse(null);
+        return repository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     public void delete(Long id) {
