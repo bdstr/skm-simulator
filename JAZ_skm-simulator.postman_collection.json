@@ -1,356 +1,481 @@
 {
-	"info": {
-		"_postman_id": "206371d5-2f0e-4c07-b0c4-aaad2b6b2b84",
-		"name": "JAZ skm-simulator",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-	},
-	"item": [
-		{
-			"name": "API",
-			"item": [
-				{
-					"name": "CRUD Trains",
-					"item": [
-						{
-							"name": "GET Train 1",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:9000/trains/1",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "9000",
-									"path": [
-										"trains",
-										"1"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "ADD Train",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"direction\": 1,\n    \"currentStation\": \"GDANSK_OLIWA\",\n    \"waitedTimeOnLastStation\": 0\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:9000/trains",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "9000",
-									"path": [
-										"trains"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "DELETE Train 3",
-							"request": {
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:9000/trains/3",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "9000",
-									"path": [
-										"trains",
-										"3"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "UPDATE Train 1",
-							"request": {
-								"method": "PUT",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"id\": 1,\n    \"currentStation\": \"SOPOT\",\n    \"direction\": -1,\n    \"waitedTimeOnLastStation\": 0\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:9000/trains",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "9000",
-									"path": [
-										"trains"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "CRUD Compartments",
-					"item": [
-						{
-							"name": "GET Compartment 1",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:9000/compartments/1",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "9000",
-									"path": [
-										"compartments",
-										"1"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "ADD Compartment",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"capacity\": 20,\n    \"train\": {\n        \"id\": 1\n    }\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:9000/compartments",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "9000",
-									"path": [
-										"compartments"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "DELETE Compartment 3",
-							"request": {
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:9000/compartments/3",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "9000",
-									"path": [
-										"compartments",
-										"3"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "UPDATE Compartment 1",
-							"request": {
-								"method": "PUT",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"id\": 1,\n    \"capacity\": 20,\n    \"train\": {\n        \"id\": 1\n    }\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:9000/compartments",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "9000",
-									"path": [
-										"compartments"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "API POST Move forward",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:9000/move",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "9000",
-							"path": [
-								"move"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GET Trains list",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:9000/trains",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "9000",
-							"path": [
-								"trains"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GET Compartments list",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:9000/compartments",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "9000",
-							"path": [
-								"compartments"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "CLIENT",
-			"item": [
-				{
-					"name": "GET Trains list",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/show-trains",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"show-trains"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GET Compartments list",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/show-compartments",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"show-compartments"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GET Train 1 detailed info",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/show-train/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"show-train",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GET Compartment 1 detailed info",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/show-compartment/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"show-compartment",
-								"1"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		}
-	]
+  "info": {
+    "_postman_id": "808bf1f0-d172-42ed-bc8b-c8893d290cba",
+    "name": "JAZ skm-simulator",
+    "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.0.0\/collection.json"
+  },
+  "item": [
+    {
+      "name": "API",
+      "item": [
+        {
+          "name": "CRUD Trains",
+          "item": [
+            {
+              "name": "GET Train 1",
+              "id": "3d9c1a75-378f-4fba-a2b0-8cbccc292c1e",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "{{api_url}}\/trains\/1"
+              },
+              "response": []
+            },
+            {
+              "name": "ADD Train",
+              "id": "6ee82200-90c2-4250-8d12-dd2938489df6",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"direction\": 1,\n    \"currentStation\": \"GDANSK_OLIWA\",\n    \"waitedTimeOnLastStation\": 0\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "{{api_url}}\/trains"
+              },
+              "response": []
+            },
+            {
+              "name": "DELETE Train 3",
+              "id": "4785be9e-96ad-40cf-9709-3a67f7b446d7",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": "{{api_url}}\/trains\/3"
+              },
+              "response": []
+            },
+            {
+              "name": "UPDATE Train 1",
+              "id": "b409c46e-5fbd-47cd-bce0-428a99c7e478",
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"id\": 1,\n    \"currentStation\": \"SOPOT\",\n    \"direction\": -1,\n    \"waitedTimeOnLastStation\": 0\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "{{api_url}}\/trains"
+              },
+              "response": []
+            }
+          ],
+          "id": "2a81055c-7102-426f-b387-e567fcb309cb"
+        },
+        {
+          "name": "CRUD Users",
+          "item": [
+            {
+              "name": "GET User 1",
+              "id": "f2775062-0e4f-4ae5-843d-ba899feb99de",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "{{api_url}}\/users\/1"
+              },
+              "response": []
+            },
+            {
+              "name": "ADD User",
+              "id": "16177bdf-baf4-49e9-a7ef-3b418b843f57",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"username\": \"user\",\n    \"password\": \"user\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "{{api_url}}\/users"
+              },
+              "response": []
+            },
+            {
+              "name": "DELETE User 3",
+              "id": "d9882f51-9f25-4831-8e93-536b3b88bc81",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": "{{api_url}}\/users\/3"
+              },
+              "response": []
+            },
+            {
+              "name": "UPDATE User 1",
+              "id": "19e55de7-2b55-4a90-8863-a2b2b0b85834",
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"id\": 3,\n    \"username\": \"user1\",\n    \"password\": \"user\",\n    \"authorities\": \"ROLE_USER\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "{{api_url}}\/users"
+              },
+              "response": []
+            }
+          ],
+          "id": "8f9446fb-45c2-4bf2-b55c-708e5c473f78"
+        },
+        {
+          "name": "CRUD Compartments",
+          "item": [
+            {
+              "name": "GET Compartment 1",
+              "id": "22e30d74-4c96-4352-988c-39312f31098c",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "{{api_url}}\/compartments\/1"
+              },
+              "response": []
+            },
+            {
+              "name": "ADD Compartment",
+              "id": "c0610fe3-3994-4e12-98a2-7ef35c19972b",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"capacity\": 20,\n    \"train\": {\n        \"id\": 1\n    }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "{{api_url}}\/compartments"
+              },
+              "response": []
+            },
+            {
+              "name": "DELETE Compartment 3",
+              "id": "caf44da3-54f9-4c29-82d0-1b02f4946a49",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": "{{api_url}}\/compartments\/3"
+              },
+              "response": []
+            },
+            {
+              "name": "UPDATE Compartment 1",
+              "id": "112d2dbc-4a61-4a25-9d06-78be243758c9",
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"id\": 1,\n    \"capacity\": 20,\n    \"train\": {\n        \"id\": 1\n    }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "{{api_url}}\/compartments"
+              },
+              "response": []
+            }
+          ],
+          "id": "abb09a16-23a4-43f4-8274-c4eca25205a1"
+        },
+        {
+          "name": "Roles logins",
+          "item": [
+            {
+              "name": "LOGIN Admin",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "8ea88824-41af-4238-a07f-3f358d0a1118",
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text\/javascript"
+                  }
+                }
+              ],
+              "id": "a69b4e5c-43d9-4c77-8ea9-d05e60471508",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"username\":\"admin\",\n    \"password\":\"admin\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "{{api_url}}\/login"
+              },
+              "response": []
+            },
+            {
+              "name": "LOGIN Moderator",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "370de9f1-0a46-4fa3-9517-b9d69ca592a1",
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text\/javascript"
+                  }
+                }
+              ],
+              "id": "2a65389e-3d48-4e34-89de-c852d315d8ab",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"username\":\"moderator\",\n    \"password\":\"moderator\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "{{api_url}}\/login"
+              },
+              "response": []
+            },
+            {
+              "name": "LOGIN User",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "ae8778da-96e4-4ee5-a6b8-eddf11fc8727",
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text\/javascript"
+                  }
+                }
+              ],
+              "id": "9e8e0d1d-17dc-40da-aa5f-46b71c8ae61e",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"username\":\"user\",\n    \"password\":\"user\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "{{api_url}}\/login"
+              },
+              "response": []
+            }
+          ],
+          "id": "70df9b71-eb87-4192-b25e-bb17b6d3edb0",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "d3791a0c-e16e-4e8a-9a6d-751155a376e1",
+                "type": "text\/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "5b85a032-360f-4079-9dd4-26a213edbdd9",
+                "type": "text\/javascript",
+                "exec": [
+                  "try {",
+                  "    var responseToken = pm.response.json().token;",
+                  "    pm.collectionVariables.set(\"api_token\", responseToken);",
+                  "} catch {",
+                  "    pm.collectionVariables.set(\"api_token\", \"\");",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "API POST Move forward",
+          "id": "c9e8d5f9-da51-43f8-9ffd-354a2ae624af",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": "{{api_url}}\/move"
+          },
+          "response": []
+        },
+        {
+          "name": "GET Trains list",
+          "id": "c6beeb15-988e-4134-90db-aa66f5e8eca7",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{api_url}}\/trains"
+          },
+          "response": []
+        },
+        {
+          "name": "GET Users list",
+          "id": "d5184492-46f6-4cf7-86f7-59a2a9886d70",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{api_url}}\/users"
+          },
+          "response": []
+        },
+        {
+          "name": "GET Compartments list",
+          "id": "8289be0e-bef4-4dcd-ab78-1c681001ffba",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{api_url}}\/compartments"
+          },
+          "response": []
+        }
+      ],
+      "id": "e4d0463d-d5df-4768-83ea-31f8dcc60306",
+      "auth": {
+        "type": "bearer",
+        "bearer": {
+          "token": "{{api_token}}"
+        }
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "id": "1b1d14d7-7b59-4792-ac5d-9db4929e0c69",
+            "type": "text\/javascript",
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "id": "5873ad50-f20d-40f9-8708-beef66804149",
+            "type": "text\/javascript",
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "CLIENT",
+      "item": [
+        {
+          "name": "GET Trains list",
+          "id": "da609d8b-b575-419d-a47f-15467234de83",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http:\/\/localhost:8080\/show-trains"
+          },
+          "response": []
+        },
+        {
+          "name": "GET Compartments list",
+          "id": "b5f6fd1e-ade5-4406-9241-e4d187a1361e",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http:\/\/localhost:8080\/show-compartments"
+          },
+          "response": []
+        },
+        {
+          "name": "GET Train 1 detailed info",
+          "id": "bea7f801-4af5-47f3-8686-825ef96e44f1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http:\/\/localhost:8080\/show-train\/1"
+          },
+          "response": []
+        },
+        {
+          "name": "GET Compartment 1 detailed info",
+          "id": "6425f74d-ea8e-4553-b91e-0fbb4d6c2585",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http:\/\/localhost:8080\/show-compartment\/1"
+          },
+          "response": []
+        }
+      ],
+      "id": "2d0a13e2-c445-4b71-a76a-db232a78a645"
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "id": "a620b344-f4fa-4c6e-b90a-7ec1ef153160",
+        "type": "text\/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "id": "54b6e69f-20cd-4b79-b457-250e8fc04c0f",
+        "type": "text\/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "id": "843cfaee-9186-4e8d-8c5e-3c01cb5e2b29",
+      "key": "api_url",
+      "value": "http:\/\/localhost:9000"
+    },
+    {
+      "id": "a02c6121-4933-40fb-917d-a7f38e1f8f46",
+      "key": "api_token",
+      "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYxMTY4MDAyNSwiYXV0aG9yaXRpZXMiOlsiUk9MRV9BRE1JTiJdfQ.jj2_1WiM4_VJbRRe7seGHp4OfS6T0wnr-uiFejBbQe9qCFiPQlClknx0zIbitkRFPnCjeX_XL8MkSK164UWqAw"
+    }
+  ]
 }
