@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Set;
@@ -16,6 +17,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
+@Transactional
 @TestMethodOrder(value = MethodOrderer.OrderAnnotation.class)
 abstract class GenericAuthorizationTest {
 
@@ -136,7 +138,7 @@ abstract class GenericAuthorizationTest {
     void roleHaveAccessToDeleteTrain() throws Exception {
         String uri = "/trains/";
         String verb = "DELETE";
-        String id = "2";
+        String id = "1";
 
         if (accessibleURIs.containsKey(uri) && accessibleURIs.get(uri).contains(verb)) {
             mockMvc.perform(delete(uri + id))
@@ -229,7 +231,7 @@ abstract class GenericAuthorizationTest {
     void roleHaveAccessToDeleteCompartment() throws Exception {
         String uri = "/compartments/";
         String verb = "DELETE";
-        String id = "2";
+        String id = "1";
 
         if (accessibleURIs.containsKey(uri) && accessibleURIs.get(uri).contains(verb)) {
             mockMvc.perform(delete(uri + id))
@@ -319,7 +321,7 @@ abstract class GenericAuthorizationTest {
     void roleHaveAccessToDeleteUser() throws Exception {
         String uri = "/users/";
         String verb = "DELETE";
-        String id = "2";
+        String id = "1";
 
         if (accessibleURIs.containsKey(uri) && accessibleURIs.get(uri).contains(verb)) {
             mockMvc.perform(delete(uri + id))
