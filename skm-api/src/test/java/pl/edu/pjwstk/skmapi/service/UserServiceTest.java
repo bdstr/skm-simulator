@@ -165,6 +165,7 @@ class UserServiceTest {
         userFromDb.setPassword("password");
         userFromDb.setAuthorities("ROLE_USER");
 
+        when(passwordEncoder.encode(userToUpdate.getPassword())).thenReturn(userToUpdate.getPassword());
         when(userRepository.findById(userToUpdate.getId())).thenReturn(Optional.of(userFromDb));
         when(userRepository.save(any(User.class))).then(returnsFirstArg());
 
