@@ -73,70 +73,6 @@
           "id": "2a81055c-7102-426f-b387-e567fcb309cb"
         },
         {
-          "name": "CRUD Users",
-          "item": [
-            {
-              "name": "GET User 1",
-              "id": "f2775062-0e4f-4ae5-843d-ba899feb99de",
-              "request": {
-                "method": "GET",
-                "header": [],
-                "url": "{{api_url}}\/users\/1"
-              },
-              "response": []
-            },
-            {
-              "name": "ADD User",
-              "id": "16177bdf-baf4-49e9-a7ef-3b418b843f57",
-              "request": {
-                "method": "POST",
-                "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n    \"username\": \"user\",\n    \"password\": \"user\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": "{{api_url}}\/users"
-              },
-              "response": []
-            },
-            {
-              "name": "DELETE User 3",
-              "id": "d9882f51-9f25-4831-8e93-536b3b88bc81",
-              "request": {
-                "method": "DELETE",
-                "header": [],
-                "url": "{{api_url}}\/users\/3"
-              },
-              "response": []
-            },
-            {
-              "name": "UPDATE User 1",
-              "id": "19e55de7-2b55-4a90-8863-a2b2b0b85834",
-              "request": {
-                "method": "PUT",
-                "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n    \"id\": 3,\n    \"username\": \"user1\",\n    \"password\": \"user\",\n    \"authorities\": \"ROLE_USER\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": "{{api_url}}\/users"
-              },
-              "response": []
-            }
-          ],
-          "id": "8f9446fb-45c2-4bf2-b55c-708e5c473f78"
-        },
-        {
           "name": "CRUD Compartments",
           "item": [
             {
@@ -199,6 +135,70 @@
             }
           ],
           "id": "abb09a16-23a4-43f4-8274-c4eca25205a1"
+        },
+        {
+          "name": "CRUD Users",
+          "item": [
+            {
+              "name": "GET User 1",
+              "id": "f2775062-0e4f-4ae5-843d-ba899feb99de",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "{{api_url}}\/users\/1"
+              },
+              "response": []
+            },
+            {
+              "name": "ADD User",
+              "id": "16177bdf-baf4-49e9-a7ef-3b418b843f57",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"username\": \"new_user\",\n    \"password\": \"password\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "{{api_url}}\/users"
+              },
+              "response": []
+            },
+            {
+              "name": "DELETE User 3",
+              "id": "d9882f51-9f25-4831-8e93-536b3b88bc81",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": "{{api_url}}\/users\/3"
+              },
+              "response": []
+            },
+            {
+              "name": "UPDATE User 3",
+              "id": "19e55de7-2b55-4a90-8863-a2b2b0b85834",
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"id\": 3,\n    \"username\": \"user3\",\n    \"password\": \"user\",\n    \"authorities\": \"ROLE_USER\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "{{api_url}}\/users"
+              },
+              "response": []
+            }
+          ],
+          "id": "8f9446fb-45c2-4bf2-b55c-708e5c473f78"
         },
         {
           "name": "Roles logins",
@@ -448,7 +448,7 @@
     {
       "listen": "prerequest",
       "script": {
-        "id": "a620b344-f4fa-4c6e-b90a-7ec1ef153160",
+        "id": "9d655113-7abc-40e5-acd8-433e09d6ecb3",
         "type": "text\/javascript",
         "exec": [
           ""
@@ -458,7 +458,7 @@
     {
       "listen": "test",
       "script": {
-        "id": "54b6e69f-20cd-4b79-b457-250e8fc04c0f",
+        "id": "43bcd33b-fab6-42c3-b481-0defd4aca427",
         "type": "text\/javascript",
         "exec": [
           ""
@@ -468,14 +468,14 @@
   ],
   "variable": [
     {
-      "id": "843cfaee-9186-4e8d-8c5e-3c01cb5e2b29",
+      "id": "ce4e70a8-29f7-4c0a-b377-ca47ec06d30d",
       "key": "api_url",
       "value": "http:\/\/localhost:9000"
     },
     {
-      "id": "a02c6121-4933-40fb-917d-a7f38e1f8f46",
+      "id": "bc9dfce2-04f5-478d-a682-cb1990f99003",
       "key": "api_token",
-      "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYxMTY4MDAyNSwiYXV0aG9yaXRpZXMiOlsiUk9MRV9BRE1JTiJdfQ.jj2_1WiM4_VJbRRe7seGHp4OfS6T0wnr-uiFejBbQe9qCFiPQlClknx0zIbitkRFPnCjeX_XL8MkSK164UWqAw"
+      "value": ""
     }
   ]
 }
